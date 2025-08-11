@@ -6,33 +6,46 @@
     <title>团队时区时钟 - 增强版</title>
     <link rel="icon" href="https://vectorcraftr.com/library/blink/Young%20woman%20with%20headphones.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
       :root {
         --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        --secondary-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+        --accent-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         --card-bg: rgba(255, 255, 255, 0.95);
-        --text-dark: #2c3e50;
-        --text-light: rgba(255, 255, 255, 0.9);
-        --text-muted: #7f8c8d;
-        --working-hours: linear-gradient(135deg, #27ae60, #2ecc71);
-        --off-hours: linear-gradient(135deg, #e74c3c, #c0392b);
-        --current-timezone: linear-gradient(135deg, #f39c12, #e67e22);
-        --primary-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-        --secondary-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        --hover-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        --card-border: rgba(255, 255, 255, 0.2);
+        --text-dark: #1a202c;
+        --text-light: rgba(255, 255, 255, 0.95);
+        --text-muted: #718096;
+        --working-hours: linear-gradient(135deg, #48bb78, #38a169);
+        --off-hours: linear-gradient(135deg, #f56565, #e53e3e);
+        --current-timezone: linear-gradient(135deg, #ed8936, #dd6b20);
+        --primary-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        --secondary-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        --hover-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
         --border-color: rgba(255, 255, 255, 0.3);
         --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        --glass-bg: rgba(255, 255, 255, 0.1);
+        --glass-border: rgba(255, 255, 255, 0.2);
       }
 
       .dark-mode {
-        --primary-gradient: linear-gradient(135deg, #0f2027 0%, #20576b 50%, #2c5364 100%);
-        --card-bg: rgba(30, 30, 40, 0.9);
-        --text-dark: #ecf0f1;
-        --text-light: #ecf0f1;
-        --text-muted: #bdc3c7;
-        --primary-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        --secondary-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        --hover-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        --border-color: rgba(100, 100, 120, 0.3);
+        --primary-gradient: linear-gradient(135deg, #1a202c 0%, #2d3748 50%, #4a5568 100%);
+        --secondary-gradient: linear-gradient(135deg, #2d3748 0%, #4a5568 50%, #718096 100%);
+        --accent-gradient: linear-gradient(135deg, #2b6cb0 0%, #3182ce 100%);
+        --card-bg: rgba(26, 32, 44, 0.95);
+        --card-border: rgba(255, 255, 255, 0.1);
+        --text-dark: #f7fafc;
+        --text-light: #f7fafc;
+        --text-muted: #a0aec0;
+        --primary-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        --secondary-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        --hover-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+        --border-color: rgba(255, 255, 255, 0.1);
+        --glass-bg: rgba(26, 32, 44, 0.2);
+        --glass-border: rgba(255, 255, 255, 0.1);
       }
 
       * {
@@ -42,10 +55,10 @@
       }
       
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         background: var(--primary-gradient);
         background-size: 400% 400%;
-        animation: gradientShift 15s ease infinite;
+        animation: gradientShift 20s ease infinite;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
@@ -54,12 +67,15 @@
         position: relative;
         overflow-x: hidden;
         color: var(--text-dark);
-        transition: background 0.5s ease;
+        transition: all 0.5s ease;
+        line-height: 1.6;
       }
       
       @keyframes gradientShift {
         0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
+        25% { background-position: 100% 50%; }
+        50% { background-position: 100% 100%; }
+        75% { background-position: 0% 100%; }
         100% { background-position: 0% 50%; }
       }
       
@@ -69,99 +85,126 @@
         left: 0;
         width: 100%;
         height: 100%;
-        opacity: 0.1;
+        opacity: 0.05;
         background-image: 
-          radial-gradient(circle at 25% 25%, white 2px, transparent 2px),
-          radial-gradient(circle at 75% 75%, white 2px, transparent 2px);
-        background-size: 50px 50px;
+          radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3) 2px, transparent 2px),
+          radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.3) 2px, transparent 2px),
+          radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+        background-size: 60px 60px, 80px 80px, 40px 40px;
         z-index: -1;
+        animation: patternMove 30s linear infinite;
+      }
+      
+      @keyframes patternMove {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(20px, 20px); }
       }
       
       .header {
         text-align: center;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
         color: var(--text-light);
         position: relative;
         width: 100%;
         max-width: 1400px;
+        padding: 20px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--secondary-shadow);
       }
       
       .header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-        font-weight: 700;
-        letter-spacing: -1px;
+        font-size: 3rem;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
+        font-weight: 800;
+        letter-spacing: -2px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 15px;
+        gap: 20px;
+        background: linear-gradient(135deg, #fff, #f0f0f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
       
       .header h1 i {
-        animation: bounce 2s infinite;
+        animation: bounce 3s infinite;
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
       }
       
       @keyframes bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        25% { transform: translateY(-15px) rotate(-5deg); }
+        75% { transform: translateY(-5px) rotate(5deg); }
       }
       
       .header p {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         opacity: 0.9;
-        font-weight: 300;
+        font-weight: 400;
+        margin-top: 10px;
       }
       
       .header::after {
         content: '';
         position: absolute;
-        bottom: -10px;
+        bottom: -15px;
         left: 50%;
         transform: translateX(-50%);
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, white, transparent);
+        width: 100px;
+        height: 4px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
         border-radius: 2px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
       }
       
       .search-container {
         width: 100%;
         max-width: 1400px;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         position: relative;
       }
       
       .search-box {
         width: 100%;
-        padding: 15px 20px;
+        padding: 18px 25px;
         border-radius: 50px;
         border: none;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        color: white;
-        font-size: 1rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        border: 1px solid var(--border-color);
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        color: var(--text-light);
+        font-size: 1.1rem;
+        font-weight: 500;
+        box-shadow: var(--secondary-shadow);
+        border: 2px solid var(--glass-border);
         transition: all 0.3s ease;
+        font-family: inherit;
       }
       
       .search-box::placeholder {
         color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
       }
       
       .search-box:focus {
         outline: none;
-        background: rgba(255, 255, 255, 0.3);
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: translateY(-2px);
       }
       
-      .search-box i {
+      .search-container i {
         position: absolute;
-        right: 20px;
+        right: 25px;
         top: 50%;
         transform: translateY(-50%);
         color: rgba(255, 255, 255, 0.7);
+        font-size: 1.2rem;
       }
       
       .main-content {
@@ -175,31 +218,32 @@
       
       .left-column {
         flex: 1;
-        min-width: 300px;
+        min-width: 350px;
       }
       
       .right-column {
         flex: 2;
-        min-width: 300px;
+        min-width: 350px;
       }
       
       .clock-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
         width: 100%;
       }
       
       .clock-card {
         background: var(--card-bg);
-        border-radius: 15px;
-        padding: 20px;
+        border-radius: 20px;
+        padding: 25px;
         box-shadow: var(--primary-shadow), var(--secondary-shadow);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--border-color);
+        backdrop-filter: blur(30px);
+        border: 2px solid var(--card-border);
         transition: var(--transition);
         position: relative;
         overflow: hidden;
+        cursor: pointer;
       }
       
       .clock-card::before {
@@ -209,13 +253,14 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-        transition: left 0.6s;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.8s ease;
       }
       
       .clock-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: var(--hover-shadow), 0 5px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: var(--hover-shadow), 0 8px 40px rgba(0, 0, 0, 0.15);
+        border-color: rgba(255, 255, 255, 0.4);
       }
       
       .clock-card:hover::before {
@@ -225,15 +270,22 @@
       .card-header {
         display: flex;
         align-items: center;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         position: relative;
         z-index: 1;
       }
       
       .country-flag {
-        font-size: 2.5rem;
-        margin-right: 15px;
-        filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+        font-size: 3rem;
+        margin-right: 20px;
+        filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.2));
+        animation: flagWave 4s ease-in-out infinite;
+      }
+      
+      @keyframes flagWave {
+        0%, 100% { transform: rotate(0deg) scale(1); }
+        25% { transform: rotate(-2deg) scale(1.05); }
+        75% { transform: rotate(2deg) scale(1.05); }
       }
       
       .country-info {
@@ -241,49 +293,79 @@
       }
       
       .country-name {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         font-weight: 700;
         color: var(--text-dark);
-        margin-bottom: 5px;
+        margin-bottom: 8px;
         letter-spacing: -0.5px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 12px;
+      }
+      
+      .delete-btn {
+        opacity: 0;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        color: #e53e3e;
+        font-size: 1rem;
+        padding: 5px;
+        border-radius: 50%;
+        background: rgba(229, 62, 62, 0.1);
+      }
+      
+      .clock-card:hover .delete-btn {
+        opacity: 1;
+      }
+      
+      .delete-btn:hover {
+        background: rgba(229, 62, 62, 0.2);
+        transform: scale(1.1);
       }
       
       .timezone-info {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         color: var(--text-muted);
         font-weight: 500;
-        background: rgba(127, 140, 141, 0.1);
-        padding: 4px 8px;
-        border-radius: 8px;
+        background: rgba(113, 128, 150, 0.1);
+        padding: 6px 12px;
+        border-radius: 12px;
         display: inline-block;
+        border: 1px solid rgba(113, 128, 150, 0.2);
       }
       
       .time-section {
         text-align: center;
-        margin: 15px 0;
+        margin: 20px 0;
         position: relative;
         z-index: 1;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
       
       .time-display {
-        font-size: 2.2rem;
+        font-size: 2.8rem;
         font-weight: 800;
         color: var(--text-dark);
-        margin-bottom: 5px;
+        margin-bottom: 8px;
         font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
-        letter-spacing: -1px;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        letter-spacing: -2px;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
+        background: linear-gradient(135deg, var(--text-dark), var(--text-muted));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
       
       .date-display {
-        font-size: 0.9rem;
+        font-size: 1rem;
         color: var(--text-muted);
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         font-weight: 500;
+        letter-spacing: 0.5px;
       }
       
       .status-section {
@@ -292,95 +374,151 @@
         align-items: center;
         position: relative;
         z-index: 1;
+        gap: 15px;
       }
       
       .status-indicator {
-        padding: 8px 16px;
-        border-radius: 25px;
-        font-size: 0.85rem;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 0.9rem;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        letter-spacing: 0.8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         transition: all 0.3s ease;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .status-indicator::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s ease;
+      }
+      
+      .status-indicator:hover::before {
+        left: 100%;
       }
       
       .working-hours {
         background: var(--working-hours);
         color: white;
+        box-shadow: 0 4px 20px rgba(72, 187, 120, 0.4);
       }
       
       .off-hours {
         background: var(--off-hours);
         color: white;
+        box-shadow: 0 4px 20px rgba(245, 101, 101, 0.4);
       }
       
       .current-timezone {
         background: var(--current-timezone);
         color: white;
-        animation: pulse 2s infinite;
+        animation: pulse 3s infinite;
+        box-shadow: 0 4px 20px rgba(237, 137, 54, 0.4);
       }
       
       @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
+        0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(237, 137, 54, 0.4); }
+        50% { transform: scale(1.05); box-shadow: 0 6px 30px rgba(237, 137, 54, 0.6); }
       }
       
       .time-diff {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         color: var(--text-muted);
-        font-weight: 500;
-        background: rgba(149, 165, 166, 0.1);
-        padding: 4px 8px;
-        border-radius: 12px;
+        font-weight: 600;
+        background: rgba(113, 128, 150, 0.1);
+        padding: 8px 15px;
+        border-radius: 20px;
+        border: 1px solid rgba(113, 128, 150, 0.2);
+        white-space: nowrap;
       }
       
       .stats-bar {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        border-radius: 15px;
-        padding: 15px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        background: var(--card-bg);
+        backdrop-filter: blur(30px);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: var(--primary-shadow);
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 20px;
         width: 100%;
+        border: 2px solid var(--card-border);
+        position: relative;
+        overflow: hidden;
       }
       
-      .dark-mode .stats-bar {
-        background: rgba(30, 30, 40, 0.9);
+      .stats-bar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--secondary-gradient);
+        border-radius: 20px 20px 0 0;
       }
       
       .stat-item {
         text-align: center;
         flex: 1;
-        min-width: 120px;
+        min-width: 140px;
+        padding: 10px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      .stat-item:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
       }
       
       .stat-number {
-        font-size: 2rem;
+        font-size: 2.2rem;
         font-weight: 800;
         color: var(--text-dark);
         display: block;
+        margin-bottom: 5px;
+        background: linear-gradient(135deg, var(--text-dark), var(--text-muted));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
       
       .stat-label {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         color: var(--text-muted);
-        font-weight: 500;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
       }
       
       .footer {
         text-align: center;
         color: var(--text-light);
-        font-size: 1rem;
-        font-weight: 300;
+        font-size: 1.1rem;
+        font-weight: 400;
         width: 100%;
         max-width: 1400px;
+        padding: 20px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 15px;
+        border: 1px solid var(--glass-border);
+        margin-top: 20px;
       }
       
       .controls {
@@ -395,40 +533,602 @@
       
       .control-btn {
         background: var(--card-bg);
-        border: none;
+        border: 2px solid var(--card-border);
         border-radius: 50%;
-        width: 60px;
-        height: 60px;
+        width: 65px;
+        height: 65px;
         cursor: pointer;
-        font-size: 1.4rem;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        font-size: 1.5rem;
+        box-shadow: var(--primary-shadow);
         transition: var(--transition);
-        backdrop-filter: blur(10px);
-        border: 1px solid var(--border-color);
+        backdrop-filter: blur(30px);
         color: var(--text-dark);
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .control-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--secondary-gradient);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 50%;
       }
       
       .control-btn:hover {
-        transform: scale(1.1) translateY(-2px);
-        background: white;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        transform: scale(1.15) translateY(-3px);
+        box-shadow: var(--hover-shadow);
+        border-color: rgba(255, 255, 255, 0.4);
       }
       
-      .dark-mode .control-btn {
-        background: rgba(30, 30, 40, 0.9);
-        color: var(--text-light);
+      .control-btn:hover::before {
+        opacity: 0.1;
       }
       
       .control-btn:active {
-        transform: scale(0.95);
+        transform: scale(1.05);
+      }
+      
+      .control-btn i {
+        position: relative;
+        z-index: 1;
+      }
+      
+      .theme-toggle {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        background: var(--glass-bg);
+        border: 2px solid var(--glass-border);
+        border-radius: 30px;
+        padding: 12px 20px;
+        color: var(--text-light);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        backdrop-filter: blur(20px);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: var(--secondary-shadow);
+      }
+      
+      .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px);
+        box-shadow: var(--primary-shadow);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+      
+      /* 日历样式优化 */
+      .calendar-container {
+        width: 100%;
+        margin-bottom: 25px;
+      }
+      
+      .calendar-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: var(--primary-shadow), var(--secondary-shadow);
+        backdrop-filter: blur(30px);
+        border: 2px solid var(--card-border);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        min-width: 350px;
+      }
+      
+      .calendar-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--hover-shadow), 0 8px 40px rgba(0, 0, 0, 0.15);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+      
+      .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid rgba(113, 128, 150, 0.1);
+        position: relative;
+      }
+      
+      .calendar-header::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 2px;
+        background: var(--secondary-gradient);
+        border-radius: 1px;
+      }
+      
+      .calendar-title {
+        text-align: center;
+        flex: 1;
+      }
+      
+      .calendar-title h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 5px;
+        letter-spacing: -0.5px;
+      }
+      
+      .calendar-title p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+      
+      .nav-btn {
+        background: var(--secondary-gradient);
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .nav-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 50%;
+      }
+      
+      .nav-btn:hover {
+        transform: scale(1.15);
+        box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+      }
+      
+      .nav-btn:hover::before {
+        opacity: 1;
+      }
+      
+      .nav-btn:active {
+        transform: scale(1.05);
+      }
+      
+      .calendar-grid {
+        margin-bottom: 20px;
+      }
+      
+      .weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+      
+      .weekday {
+        text-align: center;
+        font-weight: 700;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        padding: 12px 5px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background: rgba(113, 128, 150, 0.05);
+        border-radius: 10px;
+        border: 1px solid rgba(113, 128, 150, 0.1);
+      }
+      
+      .days-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+      }
+      
+      .day {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        font-size: 0.95rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      
+      .day:hover {
+        background: rgba(102, 126, 234, 0.2);
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        border-color: rgba(102, 126, 234, 0.4);
+      }
+      
+      .day.other-month {
+        color: #a0aec0;
+        opacity: 0.4;
+        background: rgba(255, 255, 255, 0.02);
+      }
+      
+      .day.today {
+        background: var(--secondary-gradient);
+        color: white;
+        font-weight: 800;
+        box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+        animation: todayPulse 3s infinite;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+      
+      .day.today:hover {
+        background: var(--accent-gradient);
+        transform: scale(1.15);
+        box-shadow: 0 8px 35px rgba(102, 126, 234, 0.6);
+      }
+      
+      @keyframes todayPulse {
+        0%, 100% { 
+          box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
+        }
+        50% { 
+          box-shadow: 0 10px 40px rgba(102, 126, 234, 0.6);
+        }
+      }
+      
+      .day.selected {
+        background: var(--working-hours);
+        color: white;
+        font-weight: 700;
+        box-shadow: 0 6px 25px rgba(72, 187, 120, 0.4);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+      
+      .calendar-footer {
+        text-align: center;
+        padding-top: 15px;
+        border-top: 2px solid rgba(113, 128, 150, 0.1);
+        position: relative;
+      }
+      
+      .calendar-footer::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 2px;
+        background: var(--secondary-gradient);
+        border-radius: 1px;
+      }
+      
+      .today-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+      
+      .today-label {
+        font-size: 1rem;
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+      
+      .today-date {
+        font-size: 1.1rem;
+        color: var(--text-dark);
+        font-weight: 700;
+        background: rgba(102, 126, 234, 0.1);
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+      }
+      
+      /* 侧边栏组件优化 */
+      .sidebar {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: var(--primary-shadow), var(--secondary-shadow);
+        backdrop-filter: blur(30px);
+        border: 2px solid var(--card-border);
+        transition: var(--transition);
+        margin-bottom: 25px;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .sidebar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--accent-gradient);
+        border-radius: 20px 20px 0 0;
+      }
+      
+      .sidebar:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--hover-shadow), 0 8px 40px rgba(0, 0, 0, 0.15);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+      
+      .sidebar-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(113, 128, 150, 0.1);
+      }
+      
+      .sidebar-title i {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+      }
+      
+      .weather-info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .weather-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border-radius: 15px;
+        background: rgba(113, 128, 150, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(113, 128, 150, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .weather-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+      }
+      
+      .weather-item:hover {
+        background: rgba(113, 128, 150, 0.1);
+        transform: translateX(8px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-color: rgba(113, 128, 150, 0.2);
+      }
+      
+      .weather-item:hover::before {
+        left: 100%;
+      }
+      
+      .weather-location {
+        font-weight: 700;
+        color: var(--text-dark);
+        font-size: 1.1rem;
+      }
+      
+      .weather-temp {
+        font-weight: 800;
+        font-size: 1.4rem;
+        color: var(--text-dark);
+        background: linear-gradient(135deg, var(--text-dark), var(--text-muted));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .weather-desc {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+      
+      .converter-section, .meeting-scheduler {
+        margin-top: 25px;
+      }
+      
+      .converter-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 15px;
+      }
+      
+      .converter-form, .scheduler-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .converter-input, .form-input, .form-select {
+        padding: 15px;
+        border-radius: 15px;
+        border: 2px solid var(--card-border);
+        background: rgba(255, 255, 255, 0.5);
+        color: var(--text-dark);
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        font-family: inherit;
+      }
+      
+      .dark-mode .converter-input, 
+      .dark-mode .form-input, 
+      .dark-mode .form-select {
+        background: rgba(26, 32, 44, 0.5);
+      }
+      
+      .converter-input:focus, 
+      .form-input:focus, 
+      .form-select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.8);
+      }
+      
+      .converter-result {
+        padding: 18px;
+        border-radius: 15px;
+        background: rgba(113, 128, 150, 0.1);
+        font-weight: 700;
+        text-align: center;
+        color: var(--text-dark);
+        border: 2px solid rgba(113, 128, 150, 0.2);
+        font-size: 1.1rem;
+      }
+      
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .form-label {
+        font-weight: 700;
+        color: var(--text-dark);
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+      }
+      
+      .submit-btn {
+        padding: 15px;
+        border-radius: 15px;
+        border: none;
+        background: var(--secondary-gradient);
+        color: white;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 25px rgba(102, 126, 234, 0.3);
+        position: relative;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      
+      .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s ease;
+      }
+      
+      .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 35px rgba(102, 126, 234, 0.4);
+        background: var(--accent-gradient);
+      }
+      
+      .submit-btn:hover::before {
+        left: 100%;
+      }
+      
+      .submit-btn:active {
+        transform: translateY(-1px);
+      }
+      
+      /* 加载动画优化 */
+      .loading {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* 响应式优化 */
+      @media (max-width: 1200px) {
+        .header h1 {
+          font-size: 2.5rem;
+        }
+        
+        .clock-container {
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+      }
+      
+      @media (max-width: 992px) {
+        .main-content {
+          flex-direction: column;
+        }
+        
+        .left-column, .right-column {
+          width: 100%;
+          min-width: auto;
+        }
+        
+        .header {
+          padding: 15px;
+        }
+        
+        .header h1 {
+          font-size: 2.2rem;
+          gap: 15px;
+        }
       }
       
       @media (max-width: 768px) {
+        body {
+          padding: 15px;
+        }
+        
         .header h1 {
-          font-size: 2.2rem;
+          font-size: 2rem;
+          flex-direction: column;
+          gap: 10px;
         }
         
         .clock-container {
@@ -437,11 +1137,11 @@
         }
         
         .time-display {
-          font-size: 2.2rem;
+          font-size: 2.4rem;
         }
         
-        .clock-card {
-          padding: 25px;
+        .clock-card, .calendar-card, .sidebar {
+          padding: 20px;
         }
         
         .stats-bar {
@@ -454,14 +1154,20 @@
         }
         
         .control-btn {
-          width: 50px;
-          height: 50px;
-          font-size: 1.2rem;
+          width: 55px;
+          height: 55px;
+          font-size: 1.3rem;
+        }
+        
+        .theme-toggle {
+          top: 20px;
+          right: 20px;
+          padding: 10px 16px;
+          font-size: 0.9rem;
         }
         
         .calendar-card {
-          min-width: 300px;
-          padding: 20px;
+          min-width: auto;
         }
         
         .calendar-title h3 {
@@ -469,426 +1175,114 @@
         }
         
         .nav-btn {
-          width: 35px;
-          height: 35px;
-          font-size: 1rem;
+          width: 40px;
+          height: 40px;
+          font-size: 1.1rem;
         }
         
         .day {
-          font-size: 0.8rem;
+          font-size: 0.85rem;
         }
         
-        .main-content {
-          flex-direction: column;
-        }
-      }
-      
-      .theme-toggle {
-        position: fixed;
-        top: 30px;
-        right: 30px;
-        background: rgba(255, 255, 255, 0.2);
-        border: 1px solid var(--border-color);
-        border-radius: 25px;
-        padding: 8px 16px;
-        color: white;
-        cursor: pointer;
-        font-size: 0.9rem;
-        font-weight: 500;
-        backdrop-filter: blur(10px);
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      
-      .theme-toggle:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
-      }
-      
-      /* 日历样式 */
-      .calendar-container {
-        width: 100%;
-        margin-bottom: 25px;
-      }
-      
-      .calendar-card {
-        background: var(--card-bg);
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: var(--primary-shadow), var(--secondary-shadow);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--border-color);
-        transition: var(--transition);
-        position: relative;
-        overflow: hidden;
-        min-width: 320px;
-      }
-      
-      .calendar-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--hover-shadow), 0 5px 20px rgba(0, 0, 0, 0.1);
-      }
-      
-      .calendar-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid rgba(108, 117, 125, 0.1);
-      }
-      
-      .calendar-title {
-        text-align: center;
-        flex: 1;
-      }
-      
-      .calendar-title h3 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin-bottom: 3px;
-        letter-spacing: -0.5px;
-      }
-      
-      .calendar-title p {
-        font-size: 1rem;
-        color: var(--text-muted);
-        font-weight: 500;
-      }
-      
-      .nav-btn {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        color: white;
-        font-size: 1.2rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      
-      .nav-btn:hover {
-        transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-      }
-      
-      .nav-btn:active {
-        transform: scale(0.95);
-      }
-      
-      .calendar-grid {
-        margin-bottom: 15px;
-      }
-      
-      .weekdays {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
-        margin-bottom: 10px;
-      }
-      
-      .weekday {
-        text-align: center;
-        font-weight: 600;
-        color: var(--text-muted);
-        font-size: 0.8rem;
-        padding: 8px 3px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      
-      .days-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
-      }
-      
-      .day {
-        aspect-ratio: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        position: relative;
-        font-size: 0.9rem;
-      }
-      
-      .day:hover {
-        background: rgba(102, 126, 234, 0.1);
-        transform: scale(1.05);
-      }
-      
-      .day.other-month {
-        color: #bdc3c7;
-        opacity: 0.5;
-      }
-      
-      .day.today {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        font-weight: 700;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        animation: todayPulse 2s infinite;
-      }
-      
-      .day.today:hover {
-        background: linear-gradient(135deg, #5a6fd8, #6a42a0);
-        transform: scale(1.1);
-      }
-      
-      @keyframes todayPulse {
-        0%, 100% { 
-          box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
-        50% { 
-          box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
-        }
-      }
-      
-      .day.selected {
-        background: linear-gradient(135deg, #27ae60, #2ecc71);
-        color: white;
-        font-weight: 600;
-      }
-      
-      .calendar-footer {
-        text-align: center;
-        padding-top: 10px;
-        border-top: 2px solid rgba(108, 117, 125, 0.1);
-      }
-      
-      .today-info {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-      }
-      
-      .today-label {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        font-weight: 500;
-      }
-      
-      .today-date {
-        font-size: 1rem;
-        color: var(--text-dark);
-        font-weight: 600;
-        background: rgba(102, 126, 234, 0.1);
-        padding: 5px 12px;
-        border-radius: 15px;
-      }
-      
-      /* 侧边栏组件 */
-      .sidebar {
-        background: var(--card-bg);
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: var(--primary-shadow), var(--secondary-shadow);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--border-color);
-        transition: var(--transition);
-        margin-bottom: 20px;
-      }
-      
-      .sidebar:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--hover-shadow), 0 5px 20px rgba(0, 0, 0, 0.1);
-      }
-      
-      .sidebar-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: var(--text-dark);
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      
-      .weather-info {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      
-      .weather-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-        border-radius: 10px;
-        background: rgba(127, 140, 141, 0.05);
-        transition: all 0.3s ease;
-      }
-      
-      .weather-item:hover {
-        background: rgba(127, 140, 141, 0.1);
-        transform: translateX(5px);
-      }
-      
-      .weather-location {
-        font-weight: 600;
-        color: var(--text-dark);
-      }
-      
-      .weather-temp {
-        font-weight: 700;
-        font-size: 1.2rem;
-        color: var(--text-dark);
-      }
-      
-      .weather-desc {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-      }
-      
-      .converter-section {
-        margin-top: 20px;
-      }
-      
-      .converter-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--text-dark);
-        margin-bottom: 10px;
-      }
-      
-      .converter-form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      
-      .converter-input {
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid var(--border-color);
-        background: rgba(255, 255, 255, 0.5);
-        color: var(--text-dark);
-        font-size: 1rem;
-        transition: all 0.3s ease;
-      }
-      
-      .dark-mode .converter-input {
-        background: rgba(30, 30, 40, 0.5);
-      }
-      
-      .converter-input:focus {
-        outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-      }
-      
-      .converter-result {
-        padding: 12px;
-        border-radius: 10px;
-        background: rgba(127, 140, 141, 0.1);
-        font-weight: 600;
-        text-align: center;
-        color: var(--text-dark);
-      }
-      
-      .meeting-scheduler {
-        margin-top: 20px;
-      }
-      
-      .scheduler-form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-      }
-      
-      .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-      }
-      
-      .form-label {
-        font-weight: 600;
-        color: var(--text-dark);
-        font-size: 0.9rem;
-      }
-      
-      .form-select, .form-input {
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid var(--border-color);
-        background: rgba(255, 255, 255, 0.5);
-        color: var(--text-dark);
-        font-size: 1rem;
-        transition: all 0.3s ease;
-      }
-      
-      .dark-mode .form-select, .dark-mode .form-input {
-        background: rgba(30, 30, 40, 0.5);
-      }
-      
-      .form-select:focus, .form-input:focus {
-        outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-      }
-      
-      .submit-btn {
-        padding: 12px;
-        border-radius: 10px;
-        border: none;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-      }
-      
-      .submit-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-      }
-      
-      .submit-btn:active {
-        transform: translateY(0);
-      }
-      
-      /* 加载动画 */
-      .loading {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: white;
-        animation: spin 1s ease-in-out infinite;
-      }
-      
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-      
-      /* 响应式调整 */
-      @media (max-width: 992px) {
-        .main-content {
-          flex-direction: column;
+        .search-box {
+          padding: 15px 20px;
+          font-size: 1rem;
         }
         
-        .left-column, .right-column {
+        .country-flag {
+          font-size: 2.5rem;
+          margin-right: 15px;
+        }
+        
+        .country-name {
+          font-size: 1.4rem;
+        }
+        
+        .status-section {
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        .status-indicator, .time-diff {
           width: 100%;
+          text-align: center;
         }
+      }
+      
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 1.8rem;
+        }
+        
+        .time-display {
+          font-size: 2rem;
+        }
+        
+        .stats-bar {
+          flex-direction: column;
+          gap: 15px;
+        }
+        
+        .stat-item {
+          min-width: auto;
+        }
+        
+        .main-content {
+          gap: 20px;
+        }
+      }
+      
+      /* 新增动画效果 */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .clock-card, .calendar-card, .sidebar, .stats-bar {
+        animation: fadeInUp 0.6s ease-out;
+      }
+      
+      .clock-card:nth-child(1) { animation-delay: 0.1s; }
+      .clock-card:nth-child(2) { animation-delay: 0.2s; }
+      .clock-card:nth-child(3) { animation-delay: 0.3s; }
+      .clock-card:nth-child(4) { animation-delay: 0.4s; }
+      .clock-card:nth-child(5) { animation-delay: 0.5s; }
+      .clock-card:nth-child(6) { animation-delay: 0.6s; }
+      
+      /* 滚动条美化 */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: var(--secondary-gradient);
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-gradient);
+      }
+      
+      /* 选择文本样式 */
+      ::selection {
+        background: rgba(102, 126, 234, 0.3);
+        color: var(--text-dark);
+      }
+      
+      ::-moz-selection {
+        background: rgba(102, 126, 234, 0.3);
+        color: var(--text-dark);
       }
     </style>
   </head>
@@ -902,7 +1296,7 @@
     
     <div class="header">
       <h1><i class="fas fa-globe-americas"></i> 🌍 团队时区时钟</h1>
-      <p>实时显示全球团队所在地区时间</p>
+      <p>实时显示全球团队所在地区时间 - 让协作更高效</p>
     </div>
     
     <div class="search-container">
@@ -910,7 +1304,7 @@
         type="text" 
         class="search-box" 
         id="searchBox" 
-        placeholder="搜索时区或国家..." 
+        placeholder="🔍 搜索时区或国家..." 
         onkeyup="filterClocks()"
         aria-label="搜索时区或国家"
       >
@@ -954,7 +1348,7 @@
             </div>
             <div class="calendar-footer">
               <div class="today-info">
-                <span class="today-label">今天</span>
+                <span class="today-label">📅 今天</span>
                 <span class="today-date" id="todayDate"></span>
               </div>
             </div>
@@ -995,7 +1389,7 @@
                 <i class="fas fa-sync-alt"></i> 转换时间
               </button>
               <div class="converter-result" id="converterResult">
-                请选择时间和时区进行转换
+                ⏰ 请选择时间和时区进行转换
               </div>
             </div>
           </div>
@@ -1008,7 +1402,7 @@
           </div>
           <div class="scheduler-form">
             <div class="form-group">
-              <label class="form-label">会议时间</label>
+              <label class="form-label">📅 会议时间</label>
               <input 
                 type="datetime-local" 
                 class="form-input" 
@@ -1017,7 +1411,7 @@
               >
             </div>
             <div class="form-group">
-              <label class="form-label">参与时区</label>
+              <label class="form-label">🌍 参与时区</label>
               <select multiple class="form-select" id="meetingTimezones" aria-label="选择参与时区">
                 <!-- 选项由 JS 动态生成 -->
               </select>
@@ -1037,7 +1431,7 @@
     </div>
 
     <div class="footer">
-      <p>⏰ 页面每秒自动更新 | 实时同步全球时间</p>
+      <p>⏰ 页面每秒自动更新 | 🌐 实时同步全球时间 | 💼 让团队协作更高效</p>
     </div>
 
     <div class="controls">
@@ -1051,7 +1445,6 @@
         <i class="fas fa-plus"></i>
       </button>
     </div>
-
     <script>
       // 时区数据
       const timezones = [
@@ -1106,11 +1499,11 @@
 
       // 天气数据模拟
       const weatherData = [
-        { location: "北京", temp: "25°C", desc: "晴朗" },
-        { location: "上海", temp: "28°C", desc: "多云" },
-        { location: "纽约", temp: "22°C", desc: "小雨" },
-        { location: "伦敦", temp: "18°C", desc: "阴天" },
-        { location: "东京", temp: "30°C", desc: "炎热" }
+        { location: "北京", temp: "25°C", desc: "☀️ 晴朗" },
+        { location: "上海", temp: "28°C", desc: "☁️ 多云" },
+        { location: "纽约", temp: "22°C", desc: "🌧️ 小雨" },
+        { location: "伦敦", temp: "18°C", desc: "⛅ 阴天" },
+        { location: "东京", temp: "30°C", desc: "🔥 炎热" }
       ];
 
       function getWorkingStatus(hour, workingHours, isCurrent = false) {
@@ -1121,10 +1514,10 @@
       }
 
       function getStatusText(hour, workingHours, isCurrent = false) {
-        if (isCurrent) return "当前时区";
+        if (isCurrent) return "📍 当前时区";
         return hour >= workingHours[0] && hour < workingHours[1]
-          ? "工作时间"
-          : "非工作时间";
+          ? "💼 工作时间"
+          : "🌙 非工作时间";
       }
 
       function formatTime(date) {
@@ -1155,8 +1548,8 @@
         // 计算与当前时区的时差
         const currentTime = new Date();
         const timeDiff = Math.round((localTime.getTime() - currentTime.getTime()) / (1000 * 60 * 60));
-        const timeDiffText = timeDiff === 0 ? '本地时间' : 
-          timeDiff > 0 ? `+${timeDiff}小时` : `${timeDiff}小时`;
+        const timeDiffText = timeDiff === 0 ? '🏠 本地时间' : 
+          timeDiff > 0 ? `⏰ +${timeDiff}小时` : `⏰ ${timeDiff}小时`;
 
         const statusClass = getWorkingStatus(
           hour,
@@ -1176,9 +1569,9 @@
             <div class="country-info">
               <div class="country-name">
                 ${timezone.name}
-                <i class="fas fa-trash-alt delete-btn" onclick="removeTimezone('${timezone.timezone}')" title="删除时区"></i>
+                ${!timezone.isCurrent ? `<i class="fas fa-trash-alt delete-btn" onclick="removeTimezone('${timezone.timezone}')" title="删除时区"></i>` : ''}
               </div>
-              <div class="timezone-info">${timezone.timezone}</div>
+              <div class="timezone-info">🌐 ${timezone.timezone}</div>
             </div>
           </div>
           
@@ -1187,7 +1580,7 @@
               ${formatTime(localTime)}
             </div>
             <div class="date-display" data-timezone="${timezone.timezone}">
-              ${formatDate(localTime)}
+              📅 ${formatDate(localTime)}
             </div>
           </div>
           
@@ -1225,19 +1618,19 @@
         return `
           <div class="stat-item">
             <span class="stat-number">${timezones.length}</span>
-            <span class="stat-label">时区总数</span>
+            <span class="stat-label">🌍 时区总数</span>
           </div>
           <div class="stat-item">
             <span class="stat-number">${workingCount}</span>
-            <span class="stat-label">工作时间</span>
+            <span class="stat-label">💼 工作时间</span>
           </div>
           <div class="stat-item">
             <span class="stat-number">${offCount}</span>
-            <span class="stat-label">非工作时间</span>
+            <span class="stat-label">🌙 非工作时间</span>
           </div>
           <div class="stat-item">
             <span class="stat-number">${formatTime(now)}</span>
-            <span class="stat-label">本地时间</span>
+            <span class="stat-label">🏠 本地时间</span>
           </div>
         `;
       }
@@ -1268,7 +1661,7 @@
             if (element.classList.contains("time-display")) {
               element.textContent = formatTime(localTime);
             } else if (element.classList.contains("date-display")) {
-              element.textContent = formatDate(localTime);
+              element.textContent = "📅 " + formatDate(localTime);
             }
           });
 
@@ -1321,6 +1714,9 @@
           icon.className = 'fas fa-moon';
           text.textContent = '深色模式';
         }
+        
+        // 保存主题设置到本地存储
+        localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
       }
       
       // 日历功能
@@ -1452,6 +1848,7 @@
           const timezoneName = card.getAttribute('data-timezone-name');
           if (timezoneName.includes(searchTerm)) {
             card.style.display = 'block';
+            card.style.animation = 'fadeInUp 0.3s ease-out';
           } else {
             card.style.display = 'none';
           }
@@ -1460,12 +1857,12 @@
       
       // 添加自定义时区
       function addCustomTimezone() {
-        const timezone = prompt("请输入时区标识符 (例如: Asia/Tokyo):");
+        const timezone = prompt("🌍 请输入时区标识符 (例如: Asia/Tokyo):");
         if (timezone) {
           // 验证时区是否有效
           try {
             Intl.DateTimeFormat(undefined, { timeZone: timezone });
-            const name = prompt("请输入时区名称:", timezone.split("/").pop());
+            const name = prompt("📝 请输入时区名称:", timezone.split("/").pop());
             if (name) {
               const newTimezone = {
                 name: name,
@@ -1475,9 +1872,12 @@
               };
               timezones.push(newTimezone);
               updateAllClocks();
+              
+              // 显示成功消息
+              showNotification(`✅ 成功添加时区: ${name}`, 'success');
             }
           } catch (e) {
-            alert("无效的时区标识符，请重试");
+            showNotification("❌ 无效的时区标识符，请重试", 'error');
           }
         }
       }
@@ -1486,13 +1886,51 @@
       function removeTimezone(timezoneId) {
         const index = timezones.findIndex(tz => tz.timezone === timezoneId);
         if (index !== -1 && !timezones[index].isCurrent) {
-          if (confirm(`确定要删除 ${timezones[index].name} 吗?`)) {
+          if (confirm(`🗑️ 确定要删除 ${timezones[index].name} 吗?`)) {
+            const removedName = timezones[index].name;
             timezones.splice(index, 1);
             updateAllClocks();
+            showNotification(`✅ 已删除时区: ${removedName}`, 'success');
           }
         } else {
-          alert("无法删除当前位置时区");
+          showNotification("❌ 无法删除当前位置时区", 'error');
         }
+      }
+      
+      // 通知系统
+      function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        notification.style.cssText = `
+          position: fixed;
+          top: 100px;
+          right: 30px;
+          background: ${type === 'success' ? '#48bb78' : type === 'error' ? '#f56565' : '#667eea'};
+          color: white;
+          padding: 15px 20px;
+          border-radius: 10px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+          z-index: 10000;
+          font-weight: 600;
+          transform: translateX(400px);
+          transition: transform 0.3s ease;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // 动画显示
+        setTimeout(() => {
+          notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // 自动隐藏
+        setTimeout(() => {
+          notification.style.transform = 'translateX(400px)';
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
       }
       
       // 天气信息
@@ -1524,7 +1962,7 @@
         timezones.forEach(tz => {
           const option1 = document.createElement('option');
           option1.value = tz.timezone;
-          option1.textContent = `${tz.name} (${tz.timezone})`;
+          option1.textContent = `${tz.flag} ${tz.name} (${tz.timezone})`;
           
           const option2 = option1.cloneNode(true);
           const option3 = option1.cloneNode(true);
@@ -1548,7 +1986,7 @@
         const resultElement = document.getElementById('converterResult');
         
         if (!timeInput) {
-          resultElement.textContent = "请选择时间";
+          resultElement.textContent = "⚠️ 请选择时间";
           return;
         }
         
@@ -1566,9 +2004,22 @@
           });
           
           const convertedTime = formatter.format(date);
-          resultElement.textContent = convertedTime;
+          const fromTz = timezones.find(tz => tz.timezone === fromTimezone);
+          const toTz = timezones.find(tz => tz.timezone === toTimezone);
+          
+          resultElement.innerHTML = `
+            <div style="margin-bottom: 8px;">
+              <strong>🕐 转换结果:</strong>
+            </div>
+            <div style="font-size: 1.2rem; color: var(--text-dark);">
+              ${convertedTime}
+            </div>
+            <div style="font-size: 0.9rem; margin-top: 8px; opacity: 0.8;">
+              ${fromTz ? fromTz.flag + ' ' + fromTz.name : fromTimezone} → ${toTz ? toTz.flag + ' ' + toTz.name : toTimezone}
+            </div>
+          `;
         } catch (e) {
-          resultElement.textContent = "转换失败，请检查输入";
+          resultElement.textContent = "❌ 转换失败，请检查输入";
         }
       }
       
@@ -1578,24 +2029,24 @@
         const selectedOptions = Array.from(document.getElementById('meetingTimezones').selectedOptions);
         
         if (!timeInput) {
-          alert("请选择会议时间");
+          showNotification("⚠️ 请选择会议时间", 'error');
           return;
         }
         
         if (selectedOptions.length === 0) {
-          alert("请选择参与时区");
+          showNotification("⚠️ 请选择参与时区", 'error');
           return;
         }
         
         const meetingTime = new Date(timeInput);
-        const timezones = selectedOptions.map(option => option.value);
+        const selectedTimezones = selectedOptions.map(option => option.value);
         
-        let message = `会议时间安排:\n\n`;
-        message += `基准时间: ${meetingTime.toLocaleString('zh-CN')}\n\n`;
-        message += `各时区时间:\n`;
+        let message = `📅 会议时间安排:\n\n`;
+        message += `🕐 基准时间: ${meetingTime.toLocaleString('zh-CN')}\n\n`;
+        message += `🌍 各时区时间:\n`;
         
-        timezones.forEach(tz => {
-          const tzObj = timezones.find(t => t.timezone === tz) || { name: tz.split("/").pop(), timezone: tz };
+        selectedTimezones.forEach(tz => {
+          const tzObj = timezones.find(t => t.timezone === tz) || { name: tz.split("/").pop(), timezone: tz, flag: "🌍" };
           const formatter = new Intl.DateTimeFormat('zh-CN', {
             timeZone: tz,
             year: 'numeric',
@@ -1606,10 +2057,11 @@
             hour12: false
           });
           
-          message += `${tzObj.name}: ${formatter.format(meetingTime)}\n`;
+          message += `${tzObj.flag} ${tzObj.name}: ${formatter.format(meetingTime)}\n`;
         });
         
         alert(message);
+        showNotification("✅ 会议时间已生成", 'success');
       }
       
       // 添加键盘快捷键
@@ -1620,22 +2072,39 @@
         }
         
         if (e.key === 'f' || e.key === 'F') {
+          e.preventDefault();
           toggleFullscreen();
         } else if (e.key === 't' || e.key === 'T') {
+          e.preventDefault();
           toggleTheme();
         } else if (e.key === 'r' || e.key === 'R') {
+          e.preventDefault();
           updateAllClocks();
         } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
           previousMonth();
         } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
           nextMonth();
         } else if (e.key === '+' || e.key === '=') {
+          e.preventDefault();
           addCustomTimezone();
         }
       });
 
       // 初始化
       document.addEventListener('DOMContentLoaded', function() {
+        // 恢复主题设置
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          const themeBtn = document.querySelector('.theme-toggle');
+          const icon = themeBtn.querySelector('i');
+          const text = themeBtn.querySelector('span');
+          icon.className = 'fas fa-sun';
+          text.textContent = '浅色模式';
+        }
+        
         updateAllClocks();
         generateCalendar(currentCalendarDate);
         renderWeatherInfo();
@@ -1646,6 +2115,11 @@
         const formattedNow = now.toISOString().slice(0, 16);
         document.getElementById('converterTime').value = formattedNow;
         document.getElementById('meetingTime').value = formattedNow;
+        
+        // 显示欢迎消息
+        setTimeout(() => {
+          showNotification("🎉 欢迎使用团队时区时钟！", 'success');
+        }, 1000);
       });
       
       // 启动定时器
@@ -1658,6 +2132,18 @@
           generateCalendar(currentCalendarDate);
         }
       }, 60000);
+      
+      // 页面可见性变化时更新
+      document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+          updateAllClocks();
+        }
+      });
+      
+      // 窗口获得焦点时更新
+      window.addEventListener('focus', function() {
+        updateAllClocks();
+      });
     </script>
   </body>
 </html>
