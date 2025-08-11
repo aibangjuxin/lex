@@ -2096,7 +2096,7 @@
       document.addEventListener('DOMContentLoaded', function() {
         // 恢复主题设置
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
+        if (savedTheme !== 'light') {
           document.body.classList.add('dark-mode');
           const themeBtn = document.querySelector('.theme-toggle');
           const icon = themeBtn.querySelector('i');
