@@ -1,0 +1,37 @@
+{
+  "default-address-pools": [
+    {
+      "base": "172.29.0.0/16",
+      "size": 22
+    }
+  ],
+  "default-ulimits": {
+    "nofile": {
+      "Hard": 65535,
+      "Name": "nofile",
+      "Soft": 65535
+    }
+  },
+  "experimental": false,
+  "group": "administrators",
+  "ip6tables": false,
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-file": "10",
+    "max-size": "10m"
+  },
+  "runtimes": {
+    "kata-runtime": {
+      "path": "/opt/kata/bin/kata-runtime"
+    },
+    "nvidia-runtime": {
+      "path": "/opt/nvidia/bin/nvidia-container-runtime"
+    }
+  },
+  "registry-mirrors": [
+    "https://docker.m.daocloud.io",
+    "https://huecker.io",
+    "https://dockerhub.timeweb.cloud",
+    "https://noohub.ru"
+  ]
+}
