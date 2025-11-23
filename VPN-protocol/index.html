@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VPN Protocol Comparison | VMess, Trojan, Hysteria & More</title>
+    <meta
+      name="description"
+      content="Compare popular VPN and Proxy protocols like VMess, VLess, Trojan, Hysteria, and Shadowsocks. Understand their differences in speed, security, and obfuscation."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>VPN Protocol Explorer</h1>
+      <p class="subtitle">
+        Understand the technology behind the wall. Select two protocols to
+        compare.
+      </p>
+    </header>
+
+    <div id="comparison-area">
+      <div class="comparison-controls">
+        <h3>Comparison</h3>
+        <button
+          id="clear-comparison"
+          style="
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-decoration: underline;
+          "
+        >
+          Clear Selection
+        </button>
+      </div>
+      <div id="comparison-content">
+        <!-- Table will be injected here -->
+      </div>
+    </div>
+
+    <main>
+      <div id="protocol-grid" class="protocol-grid">
+        <!-- Cards will be injected here -->
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Generated for educational purposes. <br />
+        &copy; 2025 Protocol Explorer.
+      </p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
