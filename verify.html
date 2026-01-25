@@ -380,10 +380,16 @@
           url: "https://dns.alidns.com/resolve",
         },
         {
-          id: "quad9",
-          name: "Quad9",
-          ip: "9.9.9.9",
-          url: "https://dns.quad9.net/dns-query",
+          id: "360DNS",
+          name: "360DNS",
+          ip: "101.226.4.6",
+          url: "https://doh.360.cn/dns-query",
+        },
+        {
+          id: "DNSPod",
+          name: "DNSPod",
+          ip: "119.29.29.29",
+          url: "https://doh.pub/dns-query",
         },
         // DNSPod DoH often has CORS issues or requires specific params, we'll try the common public one or omit if unstable.
         // Using AliDNS as the primary Chinese representitive is usually safer for CORS.
